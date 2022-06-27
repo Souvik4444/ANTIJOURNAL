@@ -1,19 +1,44 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet,TouchableOpacity,Image} from "react-native";
 
 import { Picker } from "@react-native-picker/picker";
+import { useTheme,useNavigation } from '@react-navigation/native';
 
-function Timer(){
-  const [country, setCountry] = useState('Unknown');
+function Timer({handleTime,seconds}){
+  const [country, setCountry] = useState(15);
+  const {colors} = useTheme();
+  const navigation = useNavigation();
+  const nav = useTheme();
+
 
   return (
-    <View style={styles.screen}>
-      {/* <Text style={styles.text}>KindaCode.com</Text> */}
+    <View >
+         <View style={{display:"flex",flexDirection:"row",marginLeft:"3%",justifyContent:"space-between",marginTop:"5%"}}>
+            <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+            <Image source={nav.dark?require('../Assets/back-dark.png'):require('../Assets/back.png')} style={{width:"78%",height:"35%",marginLeft:"8%"}}/>
+        
+            </TouchableOpacity>
+            <Text style={{fontSize:17,color:colors.text,marginRight:"40%",fontWeight:"500"}}>Time delay</Text>
+        </View>
+        <View style={styles.screen}>
       <Picker
-        selectedValue={country}
-        onValueChange={(value, index) => setCountry(value)}
+        selectedValue={seconds}
+        onValueChange={handleTime}
         // mode='dropdown'
-        style={styles.picker}
+        style={{ 
+    // marginVertical: 30,
+    width: 300,
+    height: 100,
+    // padding: 10,
+    borderWidth: 1,
+    display:"flex",
+    justifyContent:"center",
+    alignContent:"center",
+    alignItems:"center",
+    color:colors.text
+    // borderColor: "#666",
+  }}
+        dropdownIconColor={"grey"}
       >
         <Picker.Item label="Please select Time delay(Seconds)" value="Unknown" style={{display:"flex"}} />
         <Picker.Item label="1" value="1" />
@@ -72,7 +97,8 @@ function Timer(){
         <Picker.Item label="4" value="4" />
         <Picker.Item label="5" value="5" /> */}
       </Picker>
-      <Text style={styles.text}>Time Delay: {country}</Text>
+      <Text style={{color:colors.text,fontSize:24}}>Time Delay: {seconds} sec</Text>
+      </View>
     </View>
   );
 }

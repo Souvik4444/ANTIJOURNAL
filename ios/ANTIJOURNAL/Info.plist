@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -51,5 +51,53 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Baskervville-Italic.ttf</string>
+		<string>Baskervville-Regular.ttf</string>
+		<string>CedarvilleCursive-Regular.ttf</string>
+		<string>Festive-Regular.ttf</string>
+		<string>Montserrat-Italic-VariableFont_wght.ttf</string>
+		<string>Montserrat-VariableFont_wght.ttf</string>
+		<string>PatrickHand-Regular.ttf</string>
+		<string>PTSans-Italic.ttf</string>
+		<string>PTSans-Regular.ttf</string>
+		<string>Roboto-Regular.ttf</string>
+		<string>Satisfy-Regular.ttf</string>
+		<string>SourceSansPro-Regular.ttf</string>
+		<string>Bangers-Regular.ttf</string>
+		<string>Calibri Bold.TTF</string>
+		<string>Calibri Regular.ttf</string>
+		<string>GFSNeohellenic-BoldItalic.ttf</string>
+		<string>Montserrat-Bold.ttf</string>
+		<string>Montserrat-Regular.ttf</string>
+		<string>MyGreekFont.ttf</string>
+		<string>Roboto-Bold.ttf</string>
+		<string>Rubik-VariableFont_wght.ttf</string>
+		<string>SendFlowers-Regular.ttf</string>
+		<string>times new roman italic.ttf</string>
+		<string>DancingScript-Regular.ttf</string>
+		<string>NotoSerifHebrew-VariableFont_wdth,wght.ttf</string>
+		<string>Bonbon-Regular.ttf</string>
+		<string>Bongos2-2vp3.ttf</string>
+		<string>Wingdings.ttf</string>
+		<string>Bonbon.ttf</string>
+		<string>Baskervville-I.ttf</string>
+		<string>Baskervville.ttf</string>
+		<string>Calibri.ttf</string>
+		<string>Cursive.ttf</string>
+		<string>Dancing.ttf</string>
+		<string>Festive.ttf</string>
+		<string>Montserrat-B.ttf</string>
+		<string>Montserrat.ttf</string>
+		<string>PatrickHand.ttf</string>
+		<string>PTSans-I.ttf</string>
+		<string>PTSans.ttf</string>
+		<string>Roboto-B.ttf</string>
+		<string>Roboto.ttf</string>
+		<string>Satisfy.ttf</string>
+		<string>SourceSans.ttf</string>
+		<string>times-italic.ttf</string>
+	</array>
 </dict>
 </plist>

@@ -1,57 +1,64 @@
 import React, { useState,useContext } from 'react';
-import {View, StyleSheet,Text, Switch,Image,TouchableOpacity,Modal, Alert} from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import {View, StyleSheet,Text, Switch,Image,TouchableOpacity,Modal, Alert,ScrollView} from 'react-native';
+import { useTheme,useNavigation} from '@react-navigation/native';
 
-';'
-
-const Settingsscreen = ({navigation,route}) => {
-    const itemId = route.params;
+const Settingsscreen = ({handleTheme,Fam,size,seconds}) => {
+    const navigation= useNavigation();
+    const {colors} = useTheme();
+    const navTheme = useTheme();
+    // const itemId = route.params;
     const [modalOpen,setModalOpen] = useState(false);
+    const [alertOpen,setaAlertOpen] = useState(true);
+    const secretfont = () =>{
+        setaAlertOpen(false)
+    }
     // const {toggleTheme} = React.useContext
 
-    const [isEnabled,setIsEnabled] = useState(false);
-    const navigationTheme = useTheme();
-    const toggleSwitch= () =>{
-        if (isEnabled){
-            setModalOpen(true)
-        }else{
-            window.alert("Bye")
-        }
+    const [isEnabled,setIsEnabled] = useState(colors.dark);
+    // const navigationTheme = useTheme();
+    // const toggleSwitch= () =>
+    //     // if (isEnabled){
+    //     //     setModalOpen(true)
+    //     // }else{
+    //     //     window.alert("Bye")
+        
+        
 
-        setIsEnabled(previousState=>!previousState)
-    }
+    //     setIsEnabled(handleTheme)
+    
     return (
-        <View style={{backgroundColor: "#F8FAFC"}}>
-        <View style={{backgroundColor:"white",display:"flex"}}>
+        <View style={{backgroundColor:colors.card,maxWidth:"100%",maxHeight:"100%",}}>
+        <View style={{backgroundColor:colors.background,}}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         
-        <Image source={require('../Assets/back.png')} style={{width:"10%",height:"35%",marginTop:"5%"}}/>
+        <Image source={navTheme.dark?require('../Assets/back-dark.png'):require('../Assets/back.png')} style={{width:"10%",height:"35%",marginTop:"5%",marginLeft:"2%"}}/>
         
         </TouchableOpacity>
-            <Text style={{fontSize:44,fontWeight:'bold',marginLeft:"5%",color:"black",marginTop:"-2%",width:"100%",marginBottom:"-45%"}}>Settings</Text>
+            <Text style={{fontSize:34,fontWeight:'bold',marginLeft:"5%",top:"-10%",width:"100%",marginBottom:"-45%",color:colors.text}}>Settings</Text>
             </View>
-           <View style={{display:"flex",flexDirection:"row",backgroundColor:"white"}}>
-           <Text style={styles.bigblue}>Dark mode </Text>
+           <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,marginTop:"-12%"}}>
+           <Text style={{fontSize:18,fontWeight:"normal",marginLeft:"2.5%",color:colors.text,padding:"4%",}}>Dark mode </Text>
            
            <Switch
-           style={{position:"relative",right:"5%",marginLeft:"50%"}}
-        trackColor={{ false: "grey", true:"black" }}
-        thumbColor={ "white"}
+           style={{marginRight:"5%",display:"flex",justifyContent:"flex-end",flex:1}}
+        trackColor={{ false: colors.background1, true: colors.card1 }}
+        thumbColor={ "lightgrey"}
         ios_backgroundColor="#3e3e3e"
-        // onValueChange= {}
-        value={navigationTheme.dark}
+        onValueChange= {handleTheme}
+        // onPress ={()=>{handleTheme}}
+        value= {navTheme.dark}
       />
            
            </View>
-           <View style={{backgroundColor:"white",marginTop:"0.5%",display:"flex",flexDirection:"row"}}>
-               <Text style={styles.bigblue}>Notification </Text>
+           <View style={{backgroundColor:colors.background,marginTop:"0.5%",display:"flex",flexDirection:"row",}}>
+               <Text style={{fontSize:18,fontWeight:"10%",marginLeft:"2.5%",color:colors.text,padding:"4%",}}>Notification </Text>
                <Switch
-           style={{position:"relative",right:"5%",marginLeft:"49%"}}
-        trackColor={{ false: "grey", true:"black" }}
-        thumbColor={ isEnabled? "white":"White"}
+           style={{display:"flex",justifyContent:"flex-end",flex:1,marginRight:"5%"}}
+        trackColor={{ false: colors.background1, true:colors.card1 }}
+        thumbColor={"lightgrey"}
         ios_backgroundColor="#3e3e3e"
         onValueChange={setModalOpen}
-        value={isEnabled}
+        value={modalOpen}
       />
               
            </View>
@@ -62,62 +69,72 @@ const Settingsscreen = ({navigation,route}) => {
                          backgroundColor: "transparent",}}>
 
                          
-               <Text style={styles.heading2}>Font</Text>
+               <Text style={{    fontSize:20,fontWeight:"bold",marginLeft:"1%",color:colors.text,
+    position: "relative",
+left: "0%",
+// right: "4.27%",
+top: "50%",
+bottom: "0.71%"}}>Font</Text>
            </View>
-           <View style={{display:"flex",flexDirection:"row",backgroundColor:"white"}}>
-               <Text style={styles.bigblue}>Font</Text>
-               <Text style={{marginLeft:"46%",fontSize:18}}>Montserrat</Text>
+           <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,alignItems:"center",marginRight:"0%",justifyContent:"space-between"}}>
+               <Text style={{fontSize:18,fontWeight:"10%",marginLeft:"2.5%",color:colors.text,padding:"4%"}}>Font</Text>
+               <Text style={{fontSize:18,color:colors.text,marginRight:"0%",width:"100%",display:"flex",justifyContent:"flex-end",flex:1,marginLeft:"32%"}}>{Fam}</Text>
                <TouchableOpacity onPress={() => navigation.navigate('Font')}>
-               <Image source={require('../Assets/right.png')} style={{height:30,width:30,marginLeft:"2%"}}/>
+               <Image source={navTheme.dark? require('../Assets/next-dark.png'):require('../Assets/right.png')} style={{height:30,width:30,display:"flex",justifyContent:"flex-end",flex:1/2,marginRight:"7%"}}/>
                </TouchableOpacity>
            </View>
 
-           <View style={{display:"flex",flexDirection:"row",backgroundColor:"white",marginTop:"0.5%",alignItems:"center"}}>
-               <Text style={styles.bigblue}>Font Size</Text>
-               <Text style={{marginLeft:"43%",fontSize:18}}>Size:{JSON.stringify(itemId)}</Text>
+           <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,marginTop:"0.5%",alignItems:"center"}}>
+               <Text style={{fontSize:18,fontWeight:"10%",color:colors.text,padding:"4%",marginLeft:"2.5%"}}>Font size</Text>
+               <Text style={{marginLeft:"51%",fontSize:18,color:colors.text,}}> {size}</Text>
                <TouchableOpacity onPress={() => navigation.navigate('Fontsizer')}>
-               <Image source={require('../Assets/right.png')} style={{height:30,width:30,marginRight:"0%"}}/>
+               <Image source={navTheme.dark? require('../Assets/next-dark.png'):require('../Assets/right.png')} style={{height:30,width:30,display:"flex",justifyContent:"flex-end",flex:1/2}}/>
                </TouchableOpacity>
            </View>
 
            <View style={{padding:"5%",
                        
-                         backgroundColor: "transparent",}}>
-               <Text style={styles.heading2}>Secret Mode</Text>
+                         backgroundColor: "transparent"}}>
+               <Text style={{   fontSize:20,fontWeight:"bold",marginLeft:"1%",color:colors.text,
+                                 position: "relative",
+                                 left: "0%",
+                                 top: "50%",
+                                bottom: "0.71%"}}>
+                                Secret mode</Text>
            </View>
 
-           <View style={{display:"flex",flexDirection:"row",backgroundColor:"white",alignItems:"center"}}>
-               <Text style={styles.bigblue}>Time Delay</Text>
+           <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,alignItems:"center"}}>
+               <Text style={{fontSize:18,fontWeight:"10%",marginLeft:"2.5%",color:colors.text,padding:"4%",}}>Time delay</Text>
                
-               <Text style={{fontSize:18,marginLeft:"42%",}}>15 Sec</Text>
+               <Text style={{fontSize:18,marginLeft:"38.5%",color:colors.text,}}> {seconds} sec</Text>
                <TouchableOpacity onPress={() => navigation.navigate('Timer')}>
-               <Image source={require('../Assets/right.png')} style={{height:30,width:30,marginLeft:"2%"}}/>
+               <Image source={navTheme.dark? require('../Assets/next-dark.png'):require('../Assets/right.png')} style={{height:30,width:30,marginLeft:"2%",display:"flex",justifyContent:"flex-end",flex:1/2}}/>
                </TouchableOpacity>
            </View>
 
-           <View style={{backgroundColor:"white",marginTop:"0.5%",display:"flex",flexDirection:"row"}}>
-               <Text style={styles.bigblue}>Secretmode by tap </Text>
+           <View style={{backgroundColor:colors.background,marginTop:"0.5%",display:"flex",flexDirection:"row"}}>
+               <Text style={{fontSize:18,fontWeight:"10%",marginLeft:"2.5%",color:colors.text,padding:"4%",}}>Secret mode by tap </Text>
                <Switch
-           style={{position:"relative",right:"5%",marginLeft:"35%"}}
-        trackColor={{ false: "grey", true:"black" }}
-        thumbColor={ "white"}
+           style={{marginRight:"5%",marginLeft:"38%",display:"flex",justifyContent:"flex-end",flex:1}}
+        trackColor={{ false: colors.background1, true: colors.card1 }}
+        thumbColor={ "lightgrey"}
         ios_backgroundColor="#3e3e3e"
-        onValueChange={() => Alert.alert("Secret mode will be applied on double tap")}
-        // value={isEnabled}
+        onValueChange={setaAlertOpen}
+        value={alertOpen}
       />
               
            </View>
            
-           <View style={{display:"flex",flexDirection:"row",backgroundColor:"white",marginTop:"0.5%",alignItems:"center"}}>
-               <Text style={styles.bigblue}>Privacy Policy</Text>
+           <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,marginTop:"0.5%",alignItems:"center",justifyContent:"space-between"}}>
+               <Text style={{fontSize:18,fontWeight:"10%",marginLeft:"2.5%",color:colors.text,padding:"4%",}}>Privacy Policy</Text>
                <TouchableOpacity onPress={() => navigation.navigate('Privacy')}>
-               <Image source={require('../Assets/right.png')} style={{height:30,width:30,marginLeft:"67%"}}/>
+               <Image source={navTheme.dark? require('../Assets/next-dark.png'):require('../Assets/right.png')} style={{height:30,width:30,display:"flex",justifyContent:"flex-end",flex:1/2,marginRight:"8%"}}/>
                </TouchableOpacity>
            </View>
 
-           <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+           <View style={{display:"flex",justifyContent:"center",alignItems:"center",padding:55}}>
            
-    <Image source={require('../Assets/minus.png')} style={{width:"40%",height:"5%",marginTop:"14%",display:"flex",justifyContent:"center",alignItems:"center"}}/>
+    <Image source={navTheme.dark? require('../Assets/bar-dark.png'): require('../Assets/minus.png')} style={{width:"50%",height:"9%",display:"flex",justifyContent:"center",alignItems:"center",position:"relative",borderRadius:10,top:-50}}/>
            </View>
 
 <Modal
@@ -128,7 +145,7 @@ visible={modalOpen}
     <View style={{backgroundColor:"rgba(242, 242, 242, 0.8)",backfaceVisibility:"hidden",margin:50,padding:40,borderRadius:20,}}>
     <View style={{marginTop:"-8%",marginBottom:"5%"}}>
      <Text style={{fontSize:20,fontWeight:"bold",color:"black",textAlign:"center"}}>Notification</Text>
-     <Text style={{fontSize:14,fontWeight:"normal",color:"black",textAlign:"center"}}>Anti Journal wants to send you notification</Text>
+     <Text style={{fontSize:14,fontWeight:"normal",color:"black",textAlign:"center"}}>Anti Journal wants to send you notifications.</Text>
      </View>
      <View style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",marginRight:"-15%",marginLeft:"-15%",marginBottom:"-15%",marginTop:"4%",borderTopWidth:2,borderTopColor:"darkgrey"}}>
      <TouchableOpacity onPress={() => setModalOpen(false)} style={{backgroundColor:"transparent",height:45,width:115,display:"flex",justifyContent:"center",alignItems:"center",borderRightWidth:1,borderRightColor:"darkgrey"}}>
@@ -151,7 +168,7 @@ visible={modalOpen}
 
 const styles = StyleSheet.create({
     bigblue: {
-        fontSize:18,fontWeight:"10%",marginLeft:"7%",color:"grey",padding:"4%",
+        fontSize:18,marginLeft:"7%",color:"grey",padding:"4%",
 },
 heading2:{
     fontSize:20,fontWeight:"bold",marginLeft:"3%",color:"black",
