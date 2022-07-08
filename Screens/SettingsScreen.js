@@ -1,6 +1,7 @@
 import React, { useState,useContext } from 'react';
 import {View, StyleSheet,Text, Switch,Image,TouchableOpacity,Modal, Alert,ScrollView} from 'react-native';
 import { useTheme,useNavigation} from '@react-navigation/native';
+import PushNotification from "react-native-push-notification";
 
 const Settingsscreen = ({handleTheme,Fam,size,seconds}) => {
     const navigation= useNavigation();
@@ -15,6 +16,23 @@ const Settingsscreen = ({handleTheme,Fam,size,seconds}) => {
     // const {toggleTheme} = React.useContext
 
     const [isEnabled,setIsEnabled] = useState(colors.dark);
+    const handleNotification = () =>{
+        PushNotification.cancelAllLocalNotifications();
+        PushNotification.localNotification({
+            channelId: "test-channel",
+            title:"Whats yur plan today?",
+            message:"your feelings and thoughts are waiting to be expressed"
+        });
+        PushNotification.localNotificationSchedule({
+            channelId: "test-channel",
+            title:"Whats yur plan today?",
+            message:"your feelings and thoughts are waiting to be expressed",
+            date: new Date(Date.now() + 20 * 1000),
+            allowWhileIdle: true,
+            repeatType: 'time',
+            repeatTime: 28800000,
+        })
+         }
     // const navigationTheme = useTheme();
     // const toggleSwitch= () =>
     //     // if (isEnabled){
@@ -69,12 +87,13 @@ const Settingsscreen = ({handleTheme,Fam,size,seconds}) => {
                          backgroundColor: "transparent",}}>
 
                          
-               <Text style={{    fontSize:20,fontWeight:"bold",marginLeft:"1%",color:colors.text,
-    position: "relative",
-left: "0%",
-// right: "4.27%",
-top: "50%",
-bottom: "0.71%"}}>Font</Text>
+               <Text 
+               style={{    fontSize:20,fontWeight:"bold",marginLeft:"1%",color:colors.text,
+                position: "relative",
+                left: "0%",
+                // right: "4.27%",
+                top: "50%",
+                bottom: "0.71%"}}>Font</Text>
            </View>
            <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,alignItems:"center",marginRight:"0%",justifyContent:"space-between"}}>
                <Text style={{fontSize:18,fontWeight:"10%",marginLeft:"2.5%",color:colors.text,padding:"4%"}}>Font</Text>
@@ -152,7 +171,8 @@ visible={modalOpen}
          <Text style={{fontSize:17,color:"#007AFF",marginLeft:"-20%"}}>Don't Allow</Text>
      </TouchableOpacity>
 
-     <TouchableOpacity onPress={() => setModalOpen(false)} style={{backgroundColor:"transparent",height:45,width:115,display:"flex",justifyContent:"center",alignItems:"center",borderLeftWidth:1,borderLeftColor:"darkgrey"}}>
+     <TouchableOpacity onPress={() => {handleNotification();setModalOpen(false)}} 
+     style={{backgroundColor:"transparent",height:45,width:115,display:"flex",justifyContent:"center",alignItems:"center",borderLeftWidth:1,borderLeftColor:"darkgrey"}}>
          <Text style={{fontSize:17,color:"#007AFF",marginLeft:"20%"}}>Allow</Text>
      </TouchableOpacity>
      </View>

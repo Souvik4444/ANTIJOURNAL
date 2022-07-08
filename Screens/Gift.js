@@ -11,7 +11,8 @@ const Gift = ({navigation}) => {
 
     const myshare = async() =>{
         const shareOptions = {
-            message: 'please click on the  link todownload AntiJournal     =>      https://drive.google.com/file/d/11HWeIImpm3wVExd5ucJV6Vo3Azo_WtMK/view?usp=sharing',
+            message: 
+            'Hi! I have been using an app called Anti Journal that helps you release stress and find clarity and I think you would like it. please click the  link to download Anti Journal     =>      https://drive.google.com/file/d/11HWeIImpm3wVExd5ucJV6Vo3Azo_WtMK/view?usp=sharing',
         }
 
         try {
@@ -26,14 +27,18 @@ const Gift = ({navigation}) => {
           
           <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         
-        <Image source={nav.dark?require('../Assets/back-dark.png'):require('../Assets/back.png')} style={{width:"10%",height:"20%",marginTop:"5%",marginLeft:"2%"}}/>
+        <Image source={nav.dark?require('../Assets/back-dark.png'):require('../Assets/back.png')} 
+        style={{width:"10%",height:"20%",marginTop:"5%",marginLeft:"2%"}}/>
         
         </TouchableOpacity>
            <Image
-            style={{width:"110%",marginTop:"-25%",marginLeft:"-5%"}}
-            source={nav.dark? require('../Assets/giftcarddark.png'):require('../Assets/giftcardlight.png')}
+            style={{width:"88%",height:"35%",marginLeft:"7%",display:"flex",alignContent:"center",justifyContent:"center",marginTop:"-10%"}}
+            source={nav.dark?require('../Assets/gcarddark.png'):require('../Assets/gcard.png')} 
            /> 
-           <Text style={{marginTop:"-45%",marginLeft:"10%",marginRight:"5%",fontSize:18,fontWeight:"600",color:colors.text,justifyContent:"center",alignContent:"center",alignItems:"center"}}>Share Anti Journal with friends and family</Text>
+           <Text 
+           style={{marginLeft:"10%",marginRight:"5%",fontSize:18,fontWeight:"600",color:colors.text,justifyContent:"center",alignContent:"center",alignItems:"center",marginTop:"8%"}}>
+           Share a free download of Anti Journal with friends and family and help them release stress and find clarity 
+           </Text>
            
            {/* <TouchableOpacity 
             style={{backgroundColor:"lightgrey",borderRadius:50,height:50,width:"80%",display:"flex",justifyContent:"center",alignItems:"center",marginLeft:"10%",marginTop:"18%"}}>
@@ -46,7 +51,7 @@ const Gift = ({navigation}) => {
            </TouchableOpacity> */}
            
             <TouchableOpacity onPress={myshare}
-            style={{backgroundColor:"lightgrey",borderRadius:50,height:50,width:"80%",display:"flex",justifyContent:"center",alignItems:"center",marginLeft:"10%",marginTop:"24%"}}>
+            style={{backgroundColor:"lightgrey",borderRadius:50,height:50,width:"80%",display:"flex",justifyContent:"center",alignItems:"center",marginLeft:"10%",marginTop:"15%"}}>
             <Text style={{color:"black",fontSize:20}}>Share</Text>
            </TouchableOpacity>
 

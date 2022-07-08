@@ -77,10 +77,10 @@ const Write = ({size,Fam,cachememory,def}) => {
           setTimeout(() =>{
              setShouldShow(false)
              setModalOpen(true)
-            }, 1384)
+            }, 1382)
              setTimeout(() =>{
               // setShouldShow(false)
-              setModalOpen(true)}, 1384)
+              setModalOpen(true)}, 1382)
         }
         else{
            setModalOpen(false)

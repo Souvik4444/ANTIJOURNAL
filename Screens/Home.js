@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {View, StyleSheet,Text,Image,TouchableOpacity,Modal,ScrollView} from 'react-native';
 import Button from './button';
 import { useTheme } from '@react-navigation/native';
+import PushNotification from "react-native-push-notification";
 
 const Home = ({navigation}) => {
     const [modal,setModal] = useState(false);
 
     const {colors} = useTheme();
     const nav = useTheme();
+
+    useEffect(()=>{
+        createChannels();
+    },[]);
+    const createChannels = () =>{
+        PushNotification.createChannel(
+            {
+                channelId: "test-channel",
+                channelName: "Test-channel"
+            }
+        )
+    }
    
     // console.log("props available",navigation)
     return (
@@ -16,14 +29,14 @@ const Home = ({navigation}) => {
        
             <View style={{marginTop:"5%",display:"flex",flexDirection:"row",}}>
             <TouchableOpacity onPress={() => navigation.navigate("Gift")}>
-            <Image source={require('../Assets/giftgrey.png')}  
-             style={{width:"130%",height:"22%",marginLeft:"14%"}}/>
+            <Image source={nav.dark?require('../Assets/giftboxdark.gif'):require('../Assets/giftbox.gif')} 
+             style={{width:"40%",height:"22%",marginLeft:"20%"}}/>
         
             </TouchableOpacity>
 
              <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
                 
-                <Image source={nav.dark?require('../Assets/gear-dark.png'):require('../Assets/gear.png')} style={{width: 36,height:42,marginLeft:"82%",right:"2%"}}/>
+                <Image source={nav.dark?require('../Assets/gear-dark.png'):require('../Assets/gear.png')} style={{width: 36,height:42,marginLeft:"79%",right:"2%"}}/>
                 </TouchableOpacity>
             </View>
             <View style={{top:"-14%",width:"100%",marginLeft:"5%"}}>
