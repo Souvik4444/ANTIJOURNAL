@@ -3,6 +3,7 @@ import {View, StyleSheet,Text,TextInput,TouchableOpacity,Image,Modal,Alert,Keybo
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
 import { getData } from './store';
 import { useNavigation , useTheme} from '@react-navigation/native';
+import PushNotification from "react-native-push-notification";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fontFamily } from '@mui/system';
 // import { Colors } from 'react-native/Libraries/NewAppScreen';
@@ -43,6 +44,13 @@ const Write = ({size,Fam,cachememory,def}) => {
   const fest = 'Bongos2-2vp3';
     const [shouldShow, setShouldShow] = useState(false);
     const [modalOpen,setModalOpen] = useState(false);
+    const handleNotification = () =>{
+      PushNotification.cancelAllLocalNotifications();
+      PushNotification.localNotification({
+          channelId: "test-channel",
+          title:"Whats yur plan today?",
+          message:"your feelings and thoughts are waiting to be expressed"
+      });}
     // const [shouldHide, setShouldHide] = useState(true);
     // const [t,s] = useState(true);
     // const secret = () => {s(t => !t)};
@@ -211,7 +219,7 @@ const Write = ({size,Fam,cachememory,def}) => {
             <Text style={{fontSize:18,fontWeight:"normal",color:colors.text,textAlign:"center",marginTop:"-8%"}}>You are now free.</Text>
             </View>
             <View style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",width:"130%",height:"35%",marginTop:"5%",borderRadius:50,backgroundColor:colors.card1}}>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{backgroundColor:"transparent",height:45,width:125,display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <TouchableOpacity onPress={() => {navigation.navigate('Home');handleNotification()}} style={{backgroundColor:"transparent",height:45,width:125,display:"flex",justifyContent:"center",alignItems:"center"}}>
              <Text style={{fontSize:20,color:colors.text1,fontWeight:"800"}}>Ok</Text>
             </TouchableOpacity>
             </View>

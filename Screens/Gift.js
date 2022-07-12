@@ -28,7 +28,7 @@ const Gift = ({navigation}) => {
           <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         
         <Image source={nav.dark?require('../Assets/back-dark.png'):require('../Assets/back.png')} 
-        style={{width:"10%",height:"20%",marginTop:"5%",marginLeft:"2%"}}/>
+        style={{width:"10%",height:"20%",marginTop:"10%",marginLeft:"2%"}}/>
         
         </TouchableOpacity>
            <Image

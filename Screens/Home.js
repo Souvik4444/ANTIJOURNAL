@@ -29,7 +29,7 @@ const Home = ({navigation}) => {
        
             <View style={{marginTop:"5%",display:"flex",flexDirection:"row",}}>
             <TouchableOpacity onPress={() => navigation.navigate("Gift")}>
-            <Image source={nav.dark?require('../Assets/giftboxdark.gif'):require('../Assets/giftbox.gif')} 
+            <Image source={nav.dark?require('../Assets/giftboxdark.jpeg'):require('../Assets/giftbox.gif')} 
              style={{width:"40%",height:"22%",marginLeft:"20%"}}/>
         
             </TouchableOpacity>
