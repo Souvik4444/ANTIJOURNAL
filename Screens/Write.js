@@ -1,13 +1,11 @@
 import React,{useState,useEffect, useRef} from 'react';
-import {View, StyleSheet,Text,TextInput,TouchableOpacity,Image,Modal,Alert,Keyboard} from 'react-native';
+import {View, StyleSheet,Text,TextInput,TouchableOpacity,Image,Modal,Alert,Keyboard, SafeAreaView, Pressable} from 'react-native';
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
 import { getData } from './store';
-import { useNavigation , useTheme} from '@react-navigation/native';
-import PushNotification from "react-native-push-notification";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused, useNavigation , useTheme} from '@react-navigation/native';
 import { fontFamily } from '@mui/system';
-// import { Colors } from 'react-native/Libraries/NewAppScreen';
-// import { getData } from './store';
+import PushNotification from 'react-native-push-notification';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 var Sound = require('react-native-sound');
 Sound.setCategory('Playback');
 
@@ -20,10 +18,14 @@ var flame = new Sound('fire.mp3', Sound.MAIN_BUNDLE, (error) => {
   console.log('duration in seconds: ' + flame.getDuration() + 'number of channels: ' + flame.getNumberOfChannels());
 });
 
-const Write = ({size,Fam,cachememory,def}) => {
+const Write = ({size,Fam,cachememory,def, timeDelay}) => {
   const [note,setNote] = useState("")
-
+  console.log('timeDelay',timeDelay);
   const [greek,setGreek] = useState(Fam);
+
+  console.log('time_Delay',timeDelay);
+  let backCount = 0;
+  let backTimer;
   // const [norm,setNorm] = useState(true);
 
   const playPause = () => {
@@ -44,13 +46,45 @@ const Write = ({size,Fam,cachememory,def}) => {
   const fest = 'Bongos2-2vp3';
     const [shouldShow, setShouldShow] = useState(false);
     const [modalOpen,setModalOpen] = useState(false);
-    const handleNotification = () =>{
-      PushNotification.cancelAllLocalNotifications();
-      PushNotification.localNotification({
-          channelId: "test-channel",
-          title:"Whats yur plan today?",
-          message:"your feelings and thoughts are waiting to be expressed"
-      });}
+    const [initiatedSecretMode, setInitiatedSecretMode] = useState(false);
+    const [timer, setTimer] = useState(null);
+    const [timerDuration, setTimerDuration] = useState(0);
+    const [intervalTimer, setIntervalTimer] = useState(null);
+    console.log('secretMode initiated', initiatedSecretMode);
+    console.log('timer',timerDuration);
+    const isFocused = useIsFocused();
+    // useEffect(()=>{
+    //   let timeout;
+    //   let interval;
+    //   if(initiatedSecretMode){
+    //     timeout = setTimeout(()=>{
+    //       setGreek(fest);
+    //     },timeDelay*1000);
+
+    //     interval = setInterval(()=>{
+    //       setTimerDuration((v)=> v+1);
+    //     },1000);
+    //     setIntervalTimer(interval);
+    //   }
+    //   else{
+    //     if(intervalTimer){
+    //       clearInterval(intervalTimer);
+    //     }
+    //     setTimerDuration(0);
+    //     console.log('clearing timeout____');
+    //     if(timeout){
+    //       console.log('clearing timeout____');
+    //       clearTimeout(timeout);
+    //     }
+    //     setGreek(Fam);
+    //   }
+    //   return ()=>{
+    //     if(timeout){
+    //       clearTimeout(timeout);
+    //     }
+    //   }
+
+    // },[initiatedSecretMode]);
     // const [shouldHide, setShouldHide] = useState(true);
     // const [t,s] = useState(true);
     // const secret = () => {s(t => !t)};
@@ -71,8 +105,56 @@ const Write = ({size,Fam,cachememory,def}) => {
     //   }
     // };
 
+    // useEffect(()=>{
+    //   if(timerDuration==timeDelay){
+    //     clearInterval(intervalTimer);
+    //   }
+    // },[timerDuration]);
+
+
+    useEffect(()=>{
+      handleStoredData();
+      // console.log('isFocused___',isFocused);
+      const event = navigation.addListener('blur',async(e)=>{
+        console.log('events',JSON.stringify(e,null,4));
+        let myNote = "";
+        setNote((v)=> {
+          myNote = v;
+          return v;
+        })
+        console.log('ntoe',myNote);
+        await AsyncStorage.setItem('text',JSON.stringify(myNote));
+        let dt = await AsyncStorage.getItem('text');
+        console.log('main_Dt',dt);
+      });
+      return ()=> event;
+    },[]);
+
+    const handleStoredData=async()=>{
+      try{
+        let response = await AsyncStorage.getItem('text');
+        if(response){
+          let text = JSON.parse(response);
+          setNote(text);
+          console.log('text',text);
+        }
+      }
+      catch(e){
+        console.log('e',e);
+      }
+    }
+    const handleNotification = () =>{
+      PushNotification.cancelAllLocalNotifications();
+      PushNotification.localNotification({
+          channelId: "test-channel",
+          title:"Anti Journal",
+          message:"What would you like to let go of today?"
+      });}
+
     const fire=()=>{
-      setShouldShow(true);}
+      setShouldShow(true);
+      
+    }
 
     const mod=()=>{
         if (setShouldShow){
@@ -83,19 +165,21 @@ const Write = ({size,Fam,cachememory,def}) => {
         if (shouldShow) {
           // 1000 for 1 second
           setTimeout(() =>{
-             setShouldShow(false)
-             setModalOpen(true)
-            }, 1382)
-             setTimeout(() =>{
-              // setShouldShow(false)
-              setModalOpen(true)}, 1382)
-        }
-        else{
-           setModalOpen(false)
+            //  setShouldShow(false)
+             setModalOpen(true);
 
-        //  setModalOpen(true)
+            //  setShouldShow(false)
+            }, 1384)
+            //  setTimeout(() =>{
+            //   // setShouldShow(false)
+            //   setShouldShow(false)}, 1450)
         }
-      }, [shouldShow])
+        // else{
+        //    setModalOpen(false)
+
+        // //  setModalOpen(true)
+        // }
+      }, [shouldShow]);
 
       // useEffect(() => {
       //   getData().then((value) => {
@@ -103,7 +187,11 @@ const Write = ({size,Fam,cachememory,def}) => {
           
       //   });
       // }, []);
-      
+      useEffect(()=>{
+        if(modalOpen){
+          setShouldShow(false);
+        }
+      },[modalOpen])
 
     //   useEffect(() => {
     //     if (setShouldShow) {
@@ -119,8 +207,12 @@ const Write = ({size,Fam,cachememory,def}) => {
     //   await AsyncStorage.setItem("NOTES", JSON.stringify(n)).then(()=>navigation.navigate('Allnotes'))
     //   setNote("")
     // }
+    const blanktext =() =>{
+      setNote('');
+    }
 
    const onClickFunction = () => {
+    // setNote('');
       Keyboard.dismiss()
  }
 
@@ -141,15 +233,15 @@ const Write = ({size,Fam,cachememory,def}) => {
     //   setNorm(true)
     // }
     return (
-        
-        <View style={{backgroundColor:colors.background,flex:1,justifyContent:"flex-start"}}>
+        <SafeAreaView style={{flex:1}}>
+        <View style={{backgroundColor:colors.background,flex:1,justifyContent:"flex-start",marginTop:"5%"}}>
         
      
-            <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginLeft:"5%",marginRight:"5%",marginTop:"5%",height:30}}>
-            <TouchableOpacity style={{}} onPress={() => navigation.navigate('Home')}>
-        <Image source={nav.dark?require('../Assets/back-dark.png'):require('../Assets/back.png')} style={{width:30,height:40,}}/>
+            <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginLeft:"5%",marginRight:"5%",marginTop:"1%",height:30}}>
+            <TouchableOpacity style={{}} onPress={() => {navigation.navigate('Home');blanktext()}}>
+        <Image source={nav.dark?require('../Assets/back-dark.png'):require('../Assets/back.png')} style={{width:30,height:38,}}/>
         </TouchableOpacity>
-        <Text style={{fontSize:16,color:colors.text,fontFamily:""}}>
+        <Text style={{fontSize:16,color:colors.text}}>
             Anti Journal
         </Text>
        
@@ -157,7 +249,7 @@ const Write = ({size,Fam,cachememory,def}) => {
         <Image source={require('../Assets/flame_red.png')} style={{width:45,height:50,backgroundColor:"transparent"}}/>
         </TouchableOpacity>
             </View>
-            <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+            {/* <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
               <TouchableOpacity 
               style={{borderRadius:20,backgroundColor:colors.card1,width:90,height:25,justifyContent:"center",alignItems:"center",marginLeft:"5%",marginTop:"5%"}} 
               onPress={rechange}>
@@ -168,7 +260,7 @@ const Write = ({size,Fam,cachememory,def}) => {
               onPress={change}
               >
               <Text style={{color:colors.text1}}>SecretMode</Text></TouchableOpacity>
-            </View>
+            </View> */}
       
         {/* <TapGestureHandler
       onHandlerStateChange={_onSingleTap}
@@ -189,13 +281,50 @@ const Write = ({size,Fam,cachememory,def}) => {
             
             {/* {t?( */}
                 {/* {shouldHide?( */}
-
+                {/* <View style={{alignItems : 'flex-end', marginRight : 30, marginTop : 20}}>
+                <Text>
+                    Time Delay : {timeDelay} sec
+                  </Text>
+                  <Text>
+                    Timer : {timerDuration} sec
+                  </Text>
+                </View> */}
+                <Pressable onPress={()=>{console.log('Hello world')}}>
+                <View style={{marginLeft:"5%"}}>
                 <TextInput  
+                selectTextOnFocus={false}
+                onTouchStart={()=>{
+                  backCount++;
+                  console.log('backcount',backCount);
+                  if (backCount == 2) {
+                      clearTimeout(backTimer);
+                      if(greek==Fam){
+                        // if(initiatedSecretMode){
+                        //   setInitiatedSecretMode(false);
+                        // }
+                        // else{
+                        //   setInitiatedSecretMode(true);
+                        // }
+                        setGreek(fest);
+                      }
+                      else{
+                        console.log('___Disabled');
+                        setInitiatedSecretMode(false);
+                        setGreek(Fam);
+                      }
+                  } else {
+                      backTimer = setTimeout(() => {
+                      backCount = 0
+                      }, 600);
+                  }
+                }}
                 // secureTextEntry 
                 value={note} style={{marginLeft:"3%",marginTop:"3%",marginRight:"3%",marginBottom:"22%",display:"flex",justifyContent:"flex-start",fontSize:size,fontFamily:greek,color:colors.text,height:424,alignItems:"flex-start",textAlignVertical:"top"}} 
                 placeholder={"Get your thoughts and feelings out"}  placeholderTextColor={colors.text}  multiline={true} numberOfLines={1} 
                 onChangeText={setNote}
                 />
+                </View>
+                </Pressable>
                  
                 {/* </TextInput> */}
                 {/* ):null} */}
@@ -219,7 +348,7 @@ const Write = ({size,Fam,cachememory,def}) => {
             <Text style={{fontSize:18,fontWeight:"normal",color:colors.text,textAlign:"center",marginTop:"-8%"}}>You are now free.</Text>
             </View>
             <View style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",width:"130%",height:"35%",marginTop:"5%",borderRadius:50,backgroundColor:colors.card1}}>
-            <TouchableOpacity onPress={() => {navigation.navigate('Home');handleNotification()}} style={{backgroundColor:"transparent",height:45,width:125,display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <TouchableOpacity onPress={() => {setShouldShow(false); navigation.navigate('Home')}} style={{backgroundColor:"transparent",height:45,width:125,display:"flex",justifyContent:"center",alignItems:"center"}}>
              <Text style={{fontSize:20,color:colors.text1,fontWeight:"800"}}>Ok</Text>
             </TouchableOpacity>
             </View>
@@ -238,11 +367,12 @@ const Write = ({size,Fam,cachememory,def}) => {
             source={
               require('../Assets/animation.gif')
             }
-            style={{width: "100%", height: "100%",marginTop:"-200%",backgroundColor:"transparent",paddingVertical:500}}
+            style={{width: "100%", height: "100%",marginTop:"-200%",backgroundColor:"transparent",paddingVertical:550}}
           />
         ):null}
         </View>
         </View>
+        </SafeAreaView>
     );
 }
 

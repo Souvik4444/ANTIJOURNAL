@@ -46,15 +46,15 @@ const Settingsscreen = ({handleTheme,Fam,size,seconds}) => {
     
     return (
         <View style={{backgroundColor:colors.card,maxWidth:"100%",maxHeight:"100%",}}>
-        <View style={{backgroundColor:colors.background,}}>
+        <View style={{backgroundColor:colors.background,height:"13%"}}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         
-        <Image source={navTheme.dark?require('../Assets/back-dark.png'):require('../Assets/back.png')} style={{width:"10%",height:"35%",marginTop:"5%",marginLeft:"2%"}}/>
+        <Image source={navTheme.dark?require('../Assets/back-dark.png'):require('../Assets/back.png')} style={{width:"9.5%",height:"38%",marginTop:"5%",marginLeft:"2%"}}/>
         
         </TouchableOpacity>
             <Text style={{fontSize:34,fontWeight:'bold',marginLeft:"5%",top:"-10%",width:"100%",marginBottom:"-45%",color:colors.text}}>Settings</Text>
             </View>
-           <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,marginTop:"-12%"}}>
+           <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,marginTop:"-1%"}}>
            <Text style={{fontSize:18,fontWeight:"normal",marginLeft:"2.5%",color:colors.text,padding:"4%",}}>Dark mode </Text>
            
            <Switch
@@ -82,22 +82,18 @@ const Settingsscreen = ({handleTheme,Fam,size,seconds}) => {
            </View>
 
 
-           <View style={{padding:"5%",
+           <View style={{padding:"2.5%",
                        
                          backgroundColor: "transparent",}}>
 
                          
                <Text 
-               style={{    fontSize:20,fontWeight:"bold",marginLeft:"1%",color:colors.text,
-                position: "relative",
-                left: "0%",
-                // right: "4.27%",
-                top: "50%",
-                bottom: "0.71%"}}>Font</Text>
+               style={{    fontSize:20,fontWeight:"bold",marginLeft:"3%",color:colors.text,
+                }}>Font</Text>
            </View>
-           <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,alignItems:"center",marginRight:"0%",justifyContent:"space-between"}}>
+           <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,alignItems:"center",justifyContent:"space-between"}}>
                <Text style={{fontSize:18,fontWeight:"10%",marginLeft:"2.5%",color:colors.text,padding:"4%"}}>Font</Text>
-               <Text style={{fontSize:18,color:colors.text,marginRight:"0%",width:"100%",display:"flex",justifyContent:"flex-end",flex:1,marginLeft:"32%"}}>{Fam}</Text>
+               <Text style={{fontSize:18,color:colors.text,marginRight:"0%",width:"100%",display:"flex",justifyContent:"flex-end",flex:1,textAlign:"right"}}>{Fam}</Text>
                <TouchableOpacity onPress={() => navigation.navigate('Font')}>
                <Image source={navTheme.dark? require('../Assets/next-dark.png'):require('../Assets/right.png')} style={{height:30,width:30,display:"flex",justifyContent:"flex-end",flex:1/2,marginRight:"7%"}}/>
                </TouchableOpacity>
@@ -114,24 +110,24 @@ const Settingsscreen = ({handleTheme,Fam,size,seconds}) => {
            <View style={{padding:"5%",
                        
                          backgroundColor: "transparent"}}>
-               <Text style={{   fontSize:20,fontWeight:"bold",marginLeft:"1%",color:colors.text,
+               {/* <Text style={{   fontSize:20,fontWeight:"bold",marginLeft:"1%",color:colors.text,
                                  position: "relative",
                                  left: "0%",
                                  top: "50%",
                                 bottom: "0.71%"}}>
-                                Secret mode</Text>
+                                Secret mode</Text> */}
            </View>
 
-           <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,alignItems:"center"}}>
+           {/* <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,alignItems:"center"}}>
                <Text style={{fontSize:18,fontWeight:"10%",marginLeft:"2.5%",color:colors.text,padding:"4%",}}>Time delay</Text>
                
                <Text style={{fontSize:18,marginLeft:"38.5%",color:colors.text,}}> {seconds} sec</Text>
                <TouchableOpacity onPress={() => navigation.navigate('Timer')}>
                <Image source={navTheme.dark? require('../Assets/next-dark.png'):require('../Assets/right.png')} style={{height:30,width:30,marginLeft:"2%",display:"flex",justifyContent:"flex-end",flex:1/2}}/>
                </TouchableOpacity>
-           </View>
+           </View> */}
 
-           <View style={{backgroundColor:colors.background,marginTop:"0.5%",display:"flex",flexDirection:"row"}}>
+           {/* <View style={{backgroundColor:colors.background,marginTop:"0.5%",display:"flex",flexDirection:"row"}}>
                <Text style={{fontSize:18,fontWeight:"10%",marginLeft:"2.5%",color:colors.text,padding:"4%",}}>Secret mode by tap </Text>
                <Switch
            style={{marginRight:"5%",marginLeft:"38%",display:"flex",justifyContent:"flex-end",flex:1}}
@@ -142,7 +138,7 @@ const Settingsscreen = ({handleTheme,Fam,size,seconds}) => {
         value={alertOpen}
       />
               
-           </View>
+           </View> */}
            
            <View style={{display:"flex",flexDirection:"row",backgroundColor:colors.background,marginTop:"0.5%",alignItems:"center",justifyContent:"space-between"}}>
                <Text style={{fontSize:18,fontWeight:"10%",marginLeft:"2.5%",color:colors.text,padding:"4%",}}>Privacy Policy</Text>
@@ -151,9 +147,9 @@ const Settingsscreen = ({handleTheme,Fam,size,seconds}) => {
                </TouchableOpacity>
            </View>
 
-           <View style={{display:"flex",justifyContent:"center",alignItems:"center",padding:55}}>
+           <View style={{display:"flex",justifyContent:"center",alignItems:"center",padding:55,paddingVertical:135}}>
            
-    <Image source={navTheme.dark? require('../Assets/bar-dark.png'): require('../Assets/minus.png')} style={{width:"50%",height:"9%",display:"flex",justifyContent:"center",alignItems:"center",position:"relative",borderRadius:10,top:-50}}/>
+    <Image source={navTheme.dark? require('../Assets/bar-dark.png'): require('../Assets/minus.png')} style={{width:"50%",height:"9%",display:"flex",justifyContent:"center",alignItems:"center",position:"relative",borderRadius:10,top:-110}}/>
            </View>
 
 <Modal
